@@ -287,6 +287,29 @@ Composition Relationship: a sheepdog always has pelt
 
 ![](assets/uml13.png)
 
-Aggregation Relationship: a sheepdog sometimes has a caninetooth
+Aggregation Relationship: a sheepdog sometimes has a caninetooth (not always)
 
 ![](assets/uml14.png)
+
+Dependency: the dog uses the `BarkingMechanism` to bark. More specifically, we specify it with a dependency and add the publi method `bark`. We specify that the method is public by using the `+` sign.
+
+![](assets/uml15.png)
+
+Realization: now, lets say that we also have the `Pet` class. We can say that not every dog is a pet (some dogs are not pets).
+
+![](assets/uml16.png)
+
+The overall drawing:
+
+![](assets/uml17.png)
+
+Finally, we can generate code from there:
+
+![](assets/uml18.png)
+
+The hability to generate code from UML is for Java and C++. It is specially useful and more straight forward for Java.
+
+### Excalidraw
+Allows multiple people to collaborate in the same drawing.
+
+# Advanced Static Modeling in UML - Lecture Recording

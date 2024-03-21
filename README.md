@@ -277,3 +277,16 @@ Visual Paradigm is downloadable.
 
 ![](assets/uml11.png)
 
+In the Visual Paradigm, we have multiple tools specific for UML drawing.
+
+Generalization:
+
+![](assets/uml12.png)
+
+Composition Relationship: a sheepdog always has pelt
+
+![](assets/uml13.png)
+
+Aggregation Relationship: a sheepdog sometimes has a caninetooth
+
+![](assets/uml14.png)

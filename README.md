@@ -146,7 +146,7 @@ The UML has three compartments:
 | Attributes of the Class                             |
 | Methods/Operations of the Class (with parameters)   |
 
-![](assets/uml1.png)
+![](assets/uml01.png)
 
 In this picture, we can see that the arrow shows the Inheritance relationship.
 
@@ -157,7 +157,7 @@ Composition is a form of reuse.
 
 Steady of reusing capabilities by inheriting operations from a base class, we emded another class within the original class and delegate out to operations defined by the other class.
 
-![](assets/uml2.png)
+![](assets/uml02.png)
 
 The UML for composition is a "colored diamond" of the composing class with a solid line with an optional arrow at the pointing towards the composed class.
 
@@ -201,7 +201,7 @@ There is some relation between the classes.
 
 This kind of relationship is generally draw with a solid line, usually with an arrow.
 
-![](assets/uml3.png)
+![](assets/uml03.png)
 
 Inside association, we have two types:
 - generic association
@@ -214,4 +214,66 @@ Specifies an "is-a" relationship among classes and/or interfaces.
 
 The relationship is draw from the derived class to the base class.
 
-![](assets/uml4.png)
+![](assets/uml04.png)
+
+We can have single inheritance:
+
+![](assets/uml05.png)
+
+Or multiple inheritance:
+
+![](assets/uml06.png)
+
+For multiple inheritance, we need to implement the UML in a language that allows for multiple inheritance.
+
+For instance, Java only allows for a single inheritance.
+
+### Realization Relationship
+A relationzation relationship is draw with a dashed line.
+
+For instance, in this example, the professor will implement the interface of instructor and the interface of employee.
+
+![](assets/uml07.png)
+
+In this case, we are still declaring a taxonomical relationship between the classes/interfaces:
+- A professor is an instructor and;
+- A professor is an employee.
+
+Both generalization and realization imply taxonomical relationship.
+
+### Dependency Relationship
+A dependency is a dashed line with an arrow pointing at dependent.
+
+![](assets/uml08.png)
+
+In this case, we are specifying that the factor class is dependent on the interface of another class.
+
+This shows that, if the interface of this other class changes (not the implementation - the interface!!), Factory may be in trouble.
+
+This kind of UML shows that there is a danger to make changes.
+
+### Aggregation
+Composition is a strong form of Aggregation.
+
+Aggregation specifies a particular type of relationship, one where one class aggregates, or contains another.
+
+Aggregation specifies a whole/part relationship and it is draw with an open diamond (not colored) and a solid line at the aggregate.
+
+![](assets/uml09.png)
+
+If the diamond is colored, it means we are dealing with composition.
+
+![](assets/uml10.png)
+
+## Tools that can help us draw this
+There are a variety of tools to do this.
+
+- Visio
+- DAI (on Linux)
+
+We will use Visual Paradigm: how to produce an UML model. Visual Paradigm is very specific for UML and allow us to draw with more rigor.
+
+Visual Paradigm is downloadable.
+
+![](assets/uml11.png)
+

@@ -72,6 +72,71 @@ Should be used to:
 - implement the invariant parts of an algorithm once and leave it up to subclasses to implement the behavior that can vary.
 - when common behavior among subclasses should be factored and localized in a common class to avoid code duplication (identify differences in existing code and then separate the differences into new operations - finally, replace the differing code with a template method that calls one of these new).
 
+
+The `InsurancePolicy`:
+```java
+package templatemethod;
+
+abstract public class InsurancePolicy {
+    public void setup() {
+        System.out.println("Inside InsurancePolicy::setup");
+        tempVar = 0.0;
+        premium = 0.0;
+    }
+
+    public void printPremium() {
+        System.out.println("Inside InsurancePolicy::printPremium");
+    }
+
+    public void pricePolicy() {
+        setup();
+        stageOne();
+        stageTwo();
+        printPremium();
+    }
+
+    abstract public void stageOne();
+    abstract public void stageTwo();
+
+    protected double tempVar;
+    protected int AccountNumber;
+    protected double premium;
+}
+```
+
+Now, from `InsurancePolicy` we derive:
+
+```java
+package templatemethod;
+
+public class CommercialAutoPolicy extends InsurancePolicy {
+    public void stageOne() {
+        System.out.println("Inside CommercialAutoPolicy::stageOne");
+        tempVar = 100.0;
+    }
+
+    public void stageTwo() {
+        System.out.println("Inside CommercialAutoPolicy::stageTwo");
+        premium = tempVar * 2;
+    }
+}
+```
+
+```java
+package templatemethod;
+
+public class BusinessOwnersPolicy extends InsurancePolicy {
+    public void stageOne() {
+        System.out.println("Inside BusinessOwnersPolicy::stageOne");
+        tempVar = 81082;
+    }
+
+    public void stageTwo() {
+        System.out.println("Inside BusinessOwnersPolicy::stageTwo");
+        premium = tempVar * 3;
+    }
+}
+```
 # Intro to UML - Lecture Recording
 UML is Unified Modeling Language. It has been around for 25 years.
 
@@ -406,4 +471,3 @@ Who ever will write the code for this part of the design has to abide by this ru
 
 ## Notes
 Notes allows us to add comments about any other object in an UML diagram.
-

@@ -325,15 +325,85 @@ composition.
 
 The composition and realization combined allow us to make something more dynamic than with Inheritance.
 
-## Multiplicity Specification
+## Advanced Relationships
+### Multiplicity Specification
 With UML we can make associations that have to happen with a particular range of connections. A clear example for that is a `CourseSection` which must have between 5 and 25 students.
 
 ![](assets/advuml02.png)
 
-## Visibility
+### Visibility
 Class Operations and Attributes may be designated as public (+), private (-), or protected (#).
 
 Associations may also be designated as private if they have the (-)
 
 ![](assets/advuml03.png)
+
+We can specify that we can access the password with the access token.
+
+### Qualification
+A qualifier is an attribute of an association which identifies the access path from the source object to the target object across the association.
+
+For instance, an `Author` can be associated with the `Book` via an `ISBNumber`.
+
+![](assets/advuml04.png)
+
+### Roles
+A Class may play multiple roles in multiple associations.
+
+We can say that a particular class can play one role when interacting with one class and another role when interacting with another class.
+
+For instance, the `Professor` plays the role of `Instructor` when dealing with the `CourseSection` and the role of `Employee` when dealing with the `PayrollSystem`.
+
+![](assets/advuml05.png)
+
+### Association
+We can create a class that is an association between two other classes.
+
+An Association Class encapsilates the manner in which the two classes are related.
+
+For instance, the `Contract` is responsible for defining the relationship between the `Consultant` and the `Client`.
+
+![](assets/advuml06.png)
+
+## Common Mechanisms
+### Stereotypes
+A stereotype allow us to extend the vocabulary of the UML.
+- They are represented inside: `<<>>`
+- Allow us to identify types of things inside the UML.
+
+Some of the examples of stereotypes are:
+- `<<exception>>`
+- `<<interface>>`: is abstract and cannot be instanciated.
+- `<<metaclass>>`
+- `<<rule>>`: we can encapsulate a rule inside a class.
+- `<<Singleton>>`: we can identify patterns inside the Stereotypes. We can indicate that the class is a Singleton or a Template Method.
+
+![](assets/advuml07.png)
+
+### Tagged Values
+Allow us to specify a bit of information about properties in UML.
+
+They are enclosed within `{braces}` in UML: `{}`
+
+They constitute metadata surrounding a particular element. We can specify some information about the class, like:
+- `{numberOfProcessors=4}`
+- `{tierLevel=middle}`
+- `{implementationLanguage=C++}`: useful if we are writing most of our code in our language but this should be written in another language.
+
+## Constraints
+Constraints allow us to specify rules associated with relationships among classes.
+
+They are enclosed within `{braces}` in UML as well: `{}`
+
+They specify the rules for which the implementation myst abide.
+
+Examples:
+- `{secureConnectionRequired}`
+- `{millisecondAccess}`
+- `{redundant}`
+
+Who ever will write the code for this part of the design has to abide by this rules.
+
+## Notes
+Notes allows us to add comments about any other object in an UML diagram.
 

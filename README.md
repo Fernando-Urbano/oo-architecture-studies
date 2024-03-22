@@ -313,3 +313,27 @@ The hability to generate code from UML is for Java and C++. It is specially usef
 Allows multiple people to collaborate in the same drawing.
 
 # Advanced Static Modeling in UML - Lecture Recording
+We start by mentioning an example `UniversityAfilliatedPerson`.
+The `UniversityAfilliatedPerson` is a `Instructor` and `Student`.
+
+What we are doing here is not inherit the implementation, but only the interface!!
+
+![](assets/advuml01.png)
+
+In this case, what we have done is included `InstructorImpl`, `SerializationImpl`, `StudentImpl` with 
+composition.
+
+The composition and realization combined allow us to make something more dynamic than with Inheritance.
+
+## Multiplicity Specification
+With UML we can make associations that have to happen with a particular range of connections. A clear example for that is a `CourseSection` which must have between 5 and 25 students.
+
+![](assets/advuml02.png)
+
+## Visibility
+Class Operations and Attributes may be designated as public (+), private (-), or protected (#).
+
+Associations may also be designated as private if they have the (-)
+
+![](assets/advuml03.png)
+

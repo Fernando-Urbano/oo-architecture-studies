@@ -72,6 +72,8 @@ Should be used to:
 - implement the invariant parts of an algorithm once and leave it up to subclasses to implement the behavior that can vary.
 - when common behavior among subclasses should be factored and localized in a common class to avoid code duplication (identify differences in existing code and then separate the differences into new operations - finally, replace the differing code with a template method that calls one of these new).
 
+test
+
 The `InsurancePolicy`:
 ```java
 package templatemethod;
@@ -105,7 +107,7 @@ abstract public class InsurancePolicy {
 
 Now, from `InsurancePolicy` we derive:
 
-```java
+```javamust
 package templatemethod;
 
 public class CommercialAutoPolicy extends InsurancePolicy {
@@ -116,7 +118,7 @@ public class CommercialAutoPolicy extends InsurancePolicy {
 
     public void stageTwo() {
         System.out.println("Inside CommercialAutoPolicy::stageTwo");
-        premium = tempVar * 2;
+        premiummust = tempVar * 2;
     }
 }
 ```

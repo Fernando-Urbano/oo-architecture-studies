@@ -72,7 +72,6 @@ Should be used to:
 - implement the invariant parts of an algorithm once and leave it up to subclasses to implement the behavior that can vary.
 - when common behavior among subclasses should be factored and localized in a common class to avoid code duplication (identify differences in existing code and then separate the differences into new operations - finally, replace the differing code with a template method that calls one of these new).
 
-
 The `InsurancePolicy`:
 ```java
 package templatemethod;
@@ -137,6 +136,50 @@ public class BusinessOwnersPolicy extends InsurancePolicy {
     }
 }
 ```
+
+# Composite
+Compose objects into tree structures to represent part-whole hierarchies.
+
+Composite lets clients treat individual objects and compositions of objects uniformly.
+
+Composite is a way to group components to form larger components, which in turn can be grouped to form still larger componets.
+
+For instance: graphical primitives. The graphical primitive has `Line`, `Rectangle`, `Text` and `Picture` related to it inside the same bigger component.
+
+The code MUST treat primitive and container objects differently, even if most of the time the user treats them identically.
+
+## Inside the Composite
+The pattern has an abstract class that represents both primitives and their containers. This class in the example is `Graphic`: it declares operatins that the other classes have as well.
+
+![](assets/composite01.png)
+
+In this case, the class `Picture` defines an aggregate of Graphic objects. The `Picture` interface conforms to the `Graphic` interface, `Picture` objects can compose other `Picture` objects recursively.
+
+![](assets/composite02.png)
+
+Advantages:
+- Helps to represent a part-whole hierarchy of objects.
+- Clients will treat all objects in the composite structure uniformly.
+
+## Amazon Boxes Example
+Imagine we run amazon delivery system and we have products and boxes.
+
+A box can contain other products as well as smaller boxes.
+
+![](assets/composite03.png)
+
+What can we do to calculate the total price of the delivery?
+
+We could unwrap all the boxes and calculate the total price in this sense.
+
+Nonetheless, having this stored inside a class with multiple arrays can be a challeging.
+
+Example of a bad solution:
+
+![](assets/composite04.png)
+
+The Composite Design Pattern allow us to compose objects into tree structures and then work with these structures as if they were individual objects.
+
 # Intro to UML - Lecture Recording
 UML is Unified Modeling Language. It has been around for 25 years.
 

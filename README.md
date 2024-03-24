@@ -72,8 +72,6 @@ Should be used to:
 - implement the invariant parts of an algorithm once and leave it up to subclasses to implement the behavior that can vary.
 - when common behavior among subclasses should be factored and localized in a common class to avoid code duplication (identify differences in existing code and then separate the differences into new operations - finally, replace the differing code with a template method that calls one of these new).
 
-test
-
 The `InsurancePolicy`:
 ```java
 package templatemethod;
@@ -181,6 +179,186 @@ Example of a bad solution:
 ![](assets/composite04.png)
 
 The Composite Design Pattern allow us to compose objects into tree structures and then work with these structures as if they were individual objects.
+
+```java
+package composite;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CompositeBox implements Box {
+    private final List<Box> children = new ArrayList<>();
+    
+    public CompositeBox(Box... boxes) {
+        children.addAll(Arrays.asList(boxes));
+    }
+
+    @Override
+    public double calculatePrice() {
+        return children.stream().mapToDouble(Box::calculatePrice).sum();
+    }
+}
+```
+
+```java
+package composite;
+
+public interface Box {
+    double calculatePrice();
+}
+
+```
+
+The composite class `CompositeBox` is only used to store multiple other boxes.
+The fact that the `CompositeBox implements Box` is saying that the previous agrees to follow the contract defined by `Box`: in other words, it aggrees to follow all methods declared in `Box`.
+
+The `CompositeBox` is a composite component in the composite design pattern structure. Therefore, `CompositeBox` can contain multiple `Box`'s, while the other elements like `Product`, `Book` and `VideoGame` cannot do that.
+
+The `Box... boxes` allows us to pass an arbitrary number of elements inside the `CompositeBox` in its constructor.
+
+We can pass `Product` inside the `CompositeBox` because the `Product` implements the `Box` interface as well.
+
+- The `Box` interface represents and describes operations that are common to both the simple and complex elements of the tree.
+- The Leaf are basic elements that do not have subelements.
+- The Composite has subelements but does not know the concrete classes of its children: they just have to implement the interface.
+
+The client works with all the elements, and does not see a difference between the `Composite` and the `Leaf`.
+
+![](assets/composite05.png)
+
+![](assets/composite06.png)
+
+By making use of this type, we can introduce the Open-Closed principle: we can introduce new element types into the application without breaking the existing code.
+
+# Iterator (Cursor)
+Provides a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+
+A aggregate object such as a list should give you a way to access its elements without exposing its internal structure.
+
+The key idea of this pattern is to take the responsibility for access and traversal out the list object and put it into an iterator.
+
+![](assets/iterator01.png)
+
+Once we have the `ListIterator` we can access the list's elements sequentially.
+- `CurrentItem` operation returns the current element in the list.
+- `First` initializes the current element to the first element.
+- `Next` advances the current element to the next element.
+- `IsDone` checks if we have advanced beyond the last element.
+
+Allows us to not show the specific implementation of graph (or list) and get the elements of it.
+Furthermore, it encapsulates all of the traversal details.
+
+Because of the iterators behavior, several iterators can go through the same collection at the same time.
+
+## Trip Example
+
+![](assets/iterator02.png)
+
+For instance, we can the following two types of Iterators which gives us ways to go through data:
+
+```java
+package iterator;
+
+public class BreadthFirstIterator<T> implements Iterator<T> {
+
+    public BreadthFirstIterator() {
+        // ...
+    }
+
+    @Override
+    public boolean hasNext() {
+        // ...
+    }
+
+    @Override
+    public Vertex<T> getNext() {
+        // ...
+    }
+
+    @Override
+    public void reset() {
+        // ...
+    }
+}
+```
+
+```java
+package iterator;
+
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class DepthFirstIterator<T> implements Iterator<T> {
+    private final Vertex<T> startVertex;
+    private Deque<Vertex<T>> stack = new LinkedList<>();
+
+    public DepthFirstIterator(Vertex<T> startVertex) {
+        this.startVertex = startVertex;
+        stack.push(startVertex);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    @Override
+    public Vertex<T> getNext() {
+        if (!hasNext()) {
+            return null;
+        }
+        Vertex<T> current = stack.pop();
+        if (!current.isVisited()) {
+            current.setVisited(true);
+            current.getNeighbors().forEach(stack::push);
+            return current;
+        }
+        return getNext();
+    }
+
+    @Override
+    public void reset() {
+        stack.clear();
+        stack.push(startVertex);
+    }
+}package iterator;
+
+public interface Iterator<T> {
+    boolean hasNext();
+    Vertex<T> getNext();
+    void reset();
+}
+
+Both implement the interface `Iterator`.
+
+```java
+package iterator;
+
+public interface Iterator<T> {
+    boolean hasNext();
+    Vertex<T> getNext();
+    void reset();
+}
+```
+
+In conclusion the Iterator pattern:
+- traverses the elements of a collection without exposing its underlying representation.
+- encapsulates the details of complex data structures by exposing simple methods to access the collection elements.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Intro to UML - Lecture Recording
 UML is Unified Modeling Language. It has been around for 25 years.

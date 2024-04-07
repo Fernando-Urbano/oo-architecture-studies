@@ -59,6 +59,13 @@ public class SingletonClient {
 Synchronized thread management:
 The `synchronized(Singleton.class)` allows us to avoid the possibility to have our thread stopped and started again and accidently instanciating two singletons.
 
+## Government Example
+Remember: provides a single point of access to it.
+
+- There is only one government.
+
+
+
 # Template Method
 Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method redefine certain steps of an algorithm without changing the algorithm's structure.
 
@@ -346,6 +353,25 @@ In conclusion the Iterator pattern:
 - traverses the elements of a collection without exposing its underlying representation.
 - encapsulates the details of complex data structures by exposing simple methods to access the collection elements.
 
+# Strategy
+Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
+Uses a class to encapsulate different line-breaking algorithms. The algorithm that is encapsulated in this way is called strategy.
+
+![](assets/strategy01.png)
+
+A composition class is responsible for maintaining and updating the linebreak of text displayed in a text viewer.
+
+The linebreak is not implemented inside the class Composition, but in the subclasses of the class `Composition`.
+
+- The Strategy class is specially useful when the classes differ only in their behaviour, while the structure remains the same.
+- The algorithm uses data that the client should not know about. It uses the Strategy pattern to avoid exposing complex, algorithm-specific data structures.
+
+The overall structure:
+
+![](assets/strategy02.png)
+
+The context defines an interface that lets Strategy access its data.
 
 
 
@@ -356,9 +382,343 @@ In conclusion the Iterator pattern:
 
 
 
+# Enterprise Integration Patterns
+Good systems rely on integration. Integration solutios have soome fundamental challenges:
+- networks are unreliable
+- networks are slow
+- any two applications are different
+- change is inevitable
 
+Those issues are solved with:
+- file transfer: one application writes a fiel that another one reads.
+- shared database: multiple applications share the same database schema.
+- remove procedure invocation: one application exposes some of its functionalities so that  it can be accessed remotely by other applications as a remote procedure (real time and synchronous communication).
+- messaging: one application publishes a message to a common message channel (the applications must agree on a channel as well as on the format of the message - happens asynchronously).
 
+## Messaging
+Messaging is like a voice-mail, but not like a call, because it is asyncronous.
 
+Messaging is a technology that enables high-speed, asynchronous, program-to-program communication with reliable delivery.
+
+- Messages: packet of data that is sent from one program to another.
+- Channels: also known as queues. Are logical pathways that connect the programs and convey messages. Behaves like a collection or array of messages.
+- Sender/Producer: a program that sends a message by writing a message to a channel.
+- Receiver/Consumer: program that receives a message by reading (and deleting) it from a channel.
+
+A message is simply some sort of data structure (string, array, record, object).
+It can be interpreted as a data or as a description of commands to be invoked on the receiver.
+
+Message contains:
+- header: with meta-information about the message (who sent it, when, where it is going, etc...)
+- body: contains the application data being transmitted and is usually ignored by messaging system.
+
+## Messaging System
+Messaging capabilies are typically provided by a separate software system: Messaging System or Message-Oriented Middleware (MOM).
+
+It manages messaging the way a database system manages data persistence.
+
+A admistrator must configure the messaging system with channels that define the paths of communications.
+
+The main task of the messaging system is to move messages from the sender to the receiver.
+
+Not always applications are ready to receive or send information.
+
+A messaging system overcomes this limitation by repeatedly trying to transmit the message until it succeds.
+
+A message is transmitted in five steps:
+1. create: the sender creates the message.
+2. send: the sender adds the mesage to a channel.
+3. deliver: the messaging system moves the message from the sender's computer to the receiver's computer, making it available to the receiver.
+4. receive: the receiver reads the message from the channel
+5. process: the receivr extracts thhe data from the message.
+
+![](assets/messages01.png)
+
+By wrapping the data as a message and storing it in the messaging system, the applications delegate to the messaging system the responsibility of delivering the data. Because the data is wrapped as an atomic message, delivery can be retried until it succeeds, and the receiver can be assured of reliably receiving exactly one copy of the data.
+
+It allows for:
+- Remote communication: messaging enables separate applications to communicate and transfer data.
+- Platform/Language integration: different systems use different languages, technologies and platforms. A messaging system can be an universal translator between the applications.
+- Asynchronous communication: allows for send-and-forge approach to communication.
+- Variable timing: in synchronous communication, the caller can make calls only as fast as the receiver can perform them. Asynchronous communication allows the sender to submit requests to thee receiver at its own pace and the receiver to consume the request at a difference pace.
+- Throttling: A problem with remote procedure calls (RPCs) is that too many of them on a single receiver aat the same time can overload the receiver. In message queues, the request is still there until the receiver is read to process them.
+- Reliable communication: provides a store-and-forward approach.
+- Disconnected Operations: some applications are specifically designed to run disconnected from the network. Messaging allows than to synchronize with the servers when a network connection is available.
+- Mediation: if an application becomes disconnected from the others, it needs only to reconnect to the messaging system to receive the messages that were sent while it was disconnected.
+- Thread Management: means that one application does not have to block while waiting for another application to process a request.
+
+## Thinking Asynchronously
+RPC (such as CORBA and DCOM) use synchronous communication. The caller waits for the receiver to process the request.
+
+![](assets/messages02.png)
+
+We do not have one thread of execution anymore, we have multiple threads of execution.
+Concurrent threads make debugging more difficult.
+
+Results arrive via a callback mechanism: the caller has to be able to process the result even while it is in the middle of other tasks.
+
+## Distributed Applications versus Integration
+Distributed applications are applications that are distributed across multiple computers.
+
+Integrated applications are independent applications that can each run by themselves but that coordinate with each other in a loosely coupled way.
+
+This enables each application to focus on one comprehensive set of functionalities and yet delegate to other applications for related functionalities.
+
+## Commercial Messaging Systems
+We can group the messaging vendor's products into four categories:
+- operating systems
+- applications servers (e.g. Java Messaging Service - JMS)
+- EAI suites
+- Web Services Toolkits
+
+The main enterprise integration patterns are:
+- message channel
+- point-to-point channel
+- publish-subscribe channel
+- message
+- message endpoint
+
+Each messaging system will call those in a different way.
+
+![](assets/messages03.png)
+
+## Pattern Form
+Each pattern follows this structure:
+- name
+- icon: most patterns are associated with an icon in addition to the pattern name
+- context: explains that type of work might make you run into the problem that this pattern solves
+- problem: explains the difficulty you are facing expressed as a question. you should be able to read the problem statement and quickly determine if this pattern is relevant to your work
+- forces: explore the constraints that make the problem difficult to solve
+- solution
+- sketch
+- result: expands of the solution
+- next: lists other patterns to be considered after applying the current one
+- sidebars: discuss more detailed technical issues or variations of the pattern
+- examples
+
+## Diagram Notation
+The Unified Modeling Language (UML) does a fine job of describing object-oriented systems with class and interaction diagrams.
+But it does not contain semantics for messaging systems.
+
+UML Profile for Enterprise Application Integration (UMLEAI) is a set of UML extensions that provide a way to model messaging systems.
+
+The book does not use UMLEAI, but instead uses a simpler notation that is easier to understand:
+
+![](assets/messages04.png)
+
+The message is represented with a small tree with a round root and nested, square elements. Many messaging systems allow messages to contain tree-like data structures (for example, XML documents).
+
+# Chapter 3: Messaging Systems
+## Introduction
+Messaging makes the communication more reliable because the applications do not need to be running at the same time.
+
+Messaging makes the messaging system responsible for delivering the message so the applications only need to worry about on what data they need to share.
+
+Channels: logical pathways that connect the programs and convey messages.
+Messages: packets of data that are sent from one program to another.
+Multi-step delivery: message might need to be validated or transformed before being delivered to the receiver. Pipes and Filter architecture describes how multiple processing steps can be chained together using channels.
+Routing: a message may have to go through several channels to reach the final destination. With the routing, the original sender sends the message to a message router and the filters and pipes architectures will ensure that the delivery is made properly.
+Transformation: a sender might send the message in one way and the receiver might need it in another way. The transformation is the process of converting the message from one format to another. For that, we use the Message Translator pattern.
+Endpoint: An application does not have some built-in capabilities to interface with a messaging system. It must contain a layer of code that knows both how the application works and how the messaging system works, bridging the two so that they work together. THe bridge code is a set of coordinated Message Endpoints.
+
+## Message Channel
+
+![](assets/messages05.png)
+
+The message channel is a pipe that connects the sender to the receiver. The sender writes a message to the channel and the receiver reads the message from the channel.
+
+When an application has information to communicate, it doesn't just fling the information into the messaging system, it adds the information to a particular Message Channel.
+
+The messaging system has different Messages Channels for different types of information.
+
+The particular implementation of the Message Channel depends on the messaging system (which commercial messaging syste is being used).
+
+There are two different types of Message Channels:
+- Point-to-Point Channel: the message is sent to one receiver. The message is removed from the channel once it is read.
+- Publish-Subscribe Channel: the message is sent to multiple receivers. The message is copied and sent to each receiver.
+
+## Message
+The message is a packet of data that is sent from one program to another.
+The data is usually transmitted as a byte stream.
+
+A message consists of two parts:
+- header: contains meta-information about the message (who sent it, when, where it is going, etc...)
+- body: contains the application data being transmitted and is usually ignored by the messaging system.
+
+## Pipes and Filters
+In many enterprise integration scenarios, a singl event triggers a sequence of processing steps, each performing a specific function.
+Let's say for instance that we have a delivery system. The delivery system receives an order and then has to (i) check if the message is encrypted, (ii) check with customer's if possible duplicated shipments are failures of the system
+The Pipes and Filters architecture describes how multiple processing steps can be chained together using channels.
+
+One bad solution for it would be to implement all the "checking" functions inside a single component.
+Creating smaller, well-defined components allow us to reuse them in other processes.
+
+Integration solutions are typically a collection of heterogeneous systems.
+As a result, different processing steps may need to execute on different physical machines. For instance, the decryption of the message can only be done in one machine or different processing steps may only be implemented using different programming languages or technologies.
+
+Implementing each function in a separate component can still introduce dependencies between the components. We can have that the decryption component calls the authentication component with the result of the decryption. On the other hand, we should also try to take advantage of the asynchronous nature of messaging systems.
+Using asynchronous messaging, multiple messages can be processed concurrently, and the processing steps can be distributed across multiple machines.
+
+![](assets/messages06.png)
+
+The idea is to have all the components having the same external interface: they can be composed into different solutions by connecting the components to different pipes.
+We can add new filters, omit existing ones or rearrange them into a new sequence - all without changing the filters themselvees.
+
+The pipe connects one filter to the next, sending output messages from one filter to the next.
+
+The connection between filter and pipe is sometimes called port.
+
+Pipes are also used to get the message from the sender and send the message to the receiver.
+Therefore, in our example above, we have 4 pipes and 3 filters.
+
+In a general way, we want to implement the components in a way that they communicate with an abstract pipe interface.
+
+### Downside of Pipes and Filters
+One of the potential downsides of Pipes and Filters architecture is the larger number of required channels.
+
+Channels provide buffering ad other functions that consume memory and CPU cycles.
+
+### Upside of Pipes and Filters
+Improves testability: we can test each individual processing step by passing a Test Message to the component and comparing the result to the expected outcome.
+
+It is more efficient to test and debug each core function in isolation because we can tailor the test mechanism to the specific function.
+
+### Pure Implementation
+The pure implementation of Pipes and Filters allows each filter to ahve only a single input port and a single output port.
+
+When dealing with a more practical approach, Message Router might be more efficient: a component may consume messages off more than one channel and also output messages to more than one channel.
+
+### Processing
+Connecting components with asynchronous message channels allows each unit in the chain to operate in its own thread or its own process.
+
+When a unit has completed processing one message it can send the message to the output channel and immediately start processing another message:
+
+![](assets/messages08.png)
+
+### Parallel Processing
+However, the overall system throughput is limited by the slowest filter in the chain.
+
+To improve the throughput, we can use parallel processing: deploy multiple parallel instances of that process throughput.
+
+In this scenario, a Point-to-Point Channel with Competing Consumers is needed to guarantee that each message on the channel is consumed by exactly one of the parallel instances.
+
+![](assets/messages08.png)
+
+This case is specifically useful when decrypting takes a longer time than the other filters. 
+
+This configuration can cause messages to be processed out of order. If the sequence of messages is critical, we can only run one instance of each component or use a Resequencer.
+
+# Message Router
+Multiple processing steps in a Pipes and Filter chain are connected by Message Channels.
+
+The message routers allows us to decouple individual processing steps so that the messages can be passed to different filters depending on a set of conditions.
+
+The Pipes and Filters architectural style connects filters directly to one another with fixed pipes.
+Nonetheless, message-based integration solutions, on the other hand, deals with individual messages which are not necessarily associated with a single, larger dataset.
+Therefore, individual messages are more likely to require a different series of processing steps, which do not work well with the fixed pipes.
+
+By default, the message channels has a very simple routing mechanism: the message is sent to a single receiver.
+Some message systems allow components to check the message without removing them from the queue to determine if they should process it.
+Nonetheless, this is not an optimal solution, since it takes time to components to check the message and maybe not do anything with it.
+
+A message router consumes a message from one message channel and republishes it to a different message channel depending on the set of conditions.
+
+![](assets/messages09.png)
+
+A message router differs from the most basic notion of Pipes and Filters in that it connects to multiple output channels.
+
+Thanks to the Pipes and Filters architecture the components surrounding the message router do not need to know about the router itself.
+
+The KEY PROPERTY of the message router is that it does not modify the message itself, it only changes the channel to which the message is sent.
+
+The key benefit of using a message router is that the decision criteria for the destination of a message are maintained in a single location. If new message types are defined, new processing components are added or routing rules change, we only need to change the message router.
+
+The message router has to have knowledge of all possible message destinations in order to send the message to the correct channel.
+If the list of possible destinations change frequently, the message router maintenance can become a burden. In these situations, using a Publish-Subscribe Channel might be a better solution or an array of Message Filters.
+
+## Disadvantages
+- A message router can degrade the performance, specially because it might need to decode the message from one channel before it can place it in another channel.
+- A message router allows for loose coupling. Nonetheless, if there is too much loose coupling, the overall system becomes hard to understand as well as the messages flow.
+
+One way to avoid the confunsion in Message Routes is with the Message History: it inspect messages at runtime and see which components they transverse.
+Many EAI packages maintain channel subscriptions in a central repository, making this type of static analysis easier.
+
+## Variants
+- fixed router: only one input channel and a single output channel are defined (generally combined with a Message Translator or a Channel Adapter).
+- context-based router: decide the message's destination based on the environment condition. Those routers are commonly used to perform load balancing, test or failover functionalities (e.g. see which processor would be better in this moment).
+
+## Stateless vs Stateful
+- Stateless: the router makes the decision based on the message content.
+- Stateful: the router makes the decision based on the message history (the router keeps might eliminate duplicate messages by keeping a list of all messages already received).
+
+Most routers contain hard-coded logic for the routing decision. Some routers connect to a Control Bus: middleware solution that changes the decision criteria without having to make any code changes or interrupting the flow of messages.
+
+# Message Translator
+Each application is usually built around a proprietary data model: for instance, the account system may be more interested in the customer's tax payer ID and the customer-relationship management might be more interested in the address and cellphone.
+
+Integration solutions often times interact with standardized data formats that seek to be independent of their application (e.g. XML, JSON).
+
+In many cases, the integration solution needs to be able to communicate with external parties using the "official" data formats, while the internal systems are based on proprietary format.
+
+We could avoid having to transform messages if we could modify the applications to use a common dat format, nonetheless, this is generally harder to do (might require a lot of changes to inherent business functionalities). Furthermore, adjust the applications makes them more tightly connectected.
+This goes against the key architectural principle of loose coupling between applications: it would make two applications direclty dependent of each other's internal representation, which eliminates the possibility of replacing or changing one application without affecting the other application.
+
+![](assets/messages10.png)
+
+The translation might have to be done in different levels:
+- data structure: entities, associations, cardinality, etc... also referred as the application layer
+- data types: field names, data types, etc...
+- data representation: also refereed as the sintax layer (XML, name-value, encryption/compression)
+- transport: communication protocols (TCP/IP sockets, HTTP, JMS, etc...)
+
+We can view each of these as a layer of transformation.
+
+The Message Translator is a component that translates the data from the internal representation to the external representation and vice-versa.
+
+## Chaining Transformations
+Many business scenarios require transformations at more than one layer.
+The beauty of a layered model is that we can treat one layer without regard to the lower layers and, therefore, can choose to work at different levels of abstraction.
+
+In the end, we use the idea of Pipes and Filters to chain the transformations together.
+
+![](assets/messages11.png)
+
+Creating a message translator for each layer allows us to reuse there components in other solutions.
+
+For instance, the Channel Adapter and the EDI-to-XML Translator can be reused in other solutions:
+
+![](assets/messages12.png)
+
+# Levels of Decoupling
+1. Message Channels: decouple applications from having to know each other's locations.
+2. Message Router: decouple applications from having to agree on a common Message Router (or path).
+3. Message Translator: decouple applications from having to agree on a common data format.
+
+# Message Endpoints
+How does an application connects to a messaging channel to send and receive messages?
+
+The applications and the messaging syste are two separate set of software.
+
+The application provides functionalities for some type of user, whereas the messaging system manages messaging channels for transmitting messages for communication.
+
+A message system is a type of server, capable of taking requests and responding to them.
+Like a database accepting and retrieving data, a messaaging server accepts and delivers messages.
+
+A messaging system is a messaging server and its clients are the applications that send and receive messages.
+
+A messaging server, like a database server, has a client API that the application ca sue to interact with the server. The API is not applications-specific, it is a general-purpose API that can be used by any application.
+
+This is a message endpoint: it is custom to both the application ad the messaging system's client API.
+
+A Message Endpoint should be designed as a Message Gateway to encapsulate the messaging code and hide the message system from the rest of the application.
+It can employ a Messaging Mapper to transfer data between domain objects and messages.
+
+## Specifications
+- One message endpoint can either send or receive messages, but NOT both.
+- An endpoint is channel-specific: it is connected to a single channel.
+- A single application would use multiple endpoints to interface with multiple channels.
+
+![](assets/messages13.png)
 
 # Intro to UML - Lecture Recording
 UML is Unified Modeling Language. It has been around for 25 years.
